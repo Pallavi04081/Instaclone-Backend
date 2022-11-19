@@ -20,7 +20,7 @@ const updteForgettedPassword = async(req,res)=>{
     try{
         if(req.body.Passward===req.body.ConfirmPassward){
             const bcryptedPassword = await bcrypt.hash(req.body.password,10)
-        const Result = await RegistionData.findOneAndUpdate({username:req.body.username,email:req.body.email},
+           const Result = await RegistionData.findOneAndUpdate({username:req.body.username,email:req.body.email},
           {
             password:bcryptedPassword
           }

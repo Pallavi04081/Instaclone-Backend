@@ -31,6 +31,7 @@ const Registation = async (req, res) => {
 const login = async (req, res) => {
     try {
         const userdata = await RegistionDataNew.find({ username: req.body.username })
+        console.log(userdata)
         if (userdata) {
             const PsswordOutput = await bcrypt.compare(req.body.password, userdata[0].password)
             if (PsswordOutput) {

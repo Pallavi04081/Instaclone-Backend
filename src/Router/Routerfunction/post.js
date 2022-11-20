@@ -63,13 +63,14 @@ const uploadPost = async(req,res)=>{
 const getPosts = async(req,res)=>{
     try{
       console.log(req.params.id)
-        let Result;
+      let Result;
         if(req.params.id){
             Result = await UserPostData.find({users:req.params.id})
             console.log(Result)
             res.json({
               Result
             })
+
         }
         else{
           Result = await UserPostData.find()

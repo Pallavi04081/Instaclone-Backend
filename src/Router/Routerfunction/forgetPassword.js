@@ -19,10 +19,10 @@ const findrequsers=async(req,res)=>{
 const updteForgettedPassword = async(req,res)=>{
     try{
         if(req.body.Passward===req.body.ConfirmPassward){
-            const bcryptedPassword = await bcrypt.hash(req.body.password,10)
+           const hashedPassowrd = await bcrypt.hash(req.body.ConfirmPassward, 10)
            const Result = await RegistionData.findOneAndUpdate({username:req.body.username,email:req.body.email},
           {
-            password:bcryptedPassword
+            password:hashedPassowrd
           }
           )
         res.json({

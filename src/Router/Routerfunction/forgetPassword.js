@@ -5,11 +5,17 @@ const bcrypt = require('bcrypt')
 
 const findrequsers=async(req,res)=>{
   try{
-    console.log(req.query)
-    const Result = await RegistionData.find({email:req.query.email})
-    res.json({
-      Result
-    }) 
+    const Result = await RegistionData.find({username:req.query.username,email:req.query.email})
+    if(Result.length>0){
+      res.json({
+        Result
+      }) 
+    }
+    else{
+      res.status(400).json({
+        message:"Invalid username or Email"
+      })
+    }
   }
   catch(error){
     console.log(error)
@@ -19,7 +25,6 @@ const findrequsers=async(req,res)=>{
 const updteForgettedPassword = async(req,res)=>{
     try{
         if(req.body.Passward===req.body.ConfirmPassward){
-          console.log(req.body.ConfirmPassward)
            const hashedPassowrd = await bcrypt.hash(req.body.ConfirmPassward, 10)
            console.log(hashedPassowrd)
            const Result = await RegistionData.findOneAndUpdate({username:req.body.username,email:req.body.email},
@@ -27,10 +32,14 @@ const updteForgettedPassword = async(req,res)=>{
             password:hashedPassowrd
           }
           )
-          console.log(Result)
         res.json({
           Result
         }) 
+      }
+      else{
+        res.status(400).json({
+          message:"Please Check Confirm-Password and Password again"
+        })
       }
     }
       catch(error){

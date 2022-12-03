@@ -7,7 +7,7 @@ const { login, Registation, patchUserData, getUpdatedData, getAllUsers } = requi
 const { uploadPost, getUploadedPhoto, uploadPhoto, getPosts, updatePostsLike } = require('./Routerfunction/post');
 const { updteForgettedPassword, findrequsers } = require('./Routerfunction/forgetPassword');
 const { CreateConversationRoom, getCreateConversationRoom, addChats } = require('./Routerfunction/Conversation');
-const {followReq,following} = require('./Routerfunction/followreques')
+const {followReq,following,unfollowing,unfollowReq} = require('./Routerfunction/followreques')
 
 Router.post('/login',login)
 
@@ -45,6 +45,10 @@ Router.patch("/conversation/:senderID/:reviserID",addChats)
 Router.patch("/updatedata/followRequest/:id",followReq)
 
 Router.patch("/updatedata/followingRequest/:id",following)
+
+Router.patch("/updatedata/unfollowRequest/:id",unfollowReq)
+
+Router.patch("/updatedata/unfollowingRequest/:id",unfollowing)
 
 
  module.exports = Router;

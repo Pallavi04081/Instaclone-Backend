@@ -77,7 +77,7 @@ const patchUserData = async(req,res)=>{
 
 const getUpdatedData = async(req,res)=>{
     try{
-        const Result = await RegistionDataNew.findOne({_id:req.params.id})
+        const Result = await RegistionDataNew.findOne({_id:req.params.id}).populate('following.users').populate('followers.users')
         res.json({
           Result
         }) 

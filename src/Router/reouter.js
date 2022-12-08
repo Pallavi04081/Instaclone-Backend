@@ -52,6 +52,14 @@ Router.patch("/updatedata/unfollowRequest/:id",unfollowReq)
 
 Router.patch("/updatedata/unfollowingRequest/:id",unfollowing)
 
+Router.get('/test',async(req,res)=>{
+try{
+ res.send('hello')
+}
+catch(error){
+console.log(error)
+}
+})
 
  module.exports = Router;
 

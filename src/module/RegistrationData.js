@@ -9,7 +9,6 @@ const registrationDataNew = new mongoose.Schema({
         username:{
             type:String,
             required:true,
-            unique:true
         },
         password:{
             type:String,
@@ -33,12 +32,28 @@ const registrationDataNew = new mongoose.Schema({
             type:String,
             default:"",
         },
-        followers:{
-            type:Array
-        },
-        following:{
-            type:Array
-        }    
+        followers:[
+           {
+            users:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"RegistarionDataNew",
+            },
+            status:false,
+            date:String,
+            time:String
+           }
+        ],
+        following:[
+            {
+                users:{
+                    type:mongoose.Schema.Types.ObjectId,
+                    ref:"RegistarionDataNew",
+                },
+                status:false,
+                date:String,
+                time:String
+            }
+        ]   
 })
 
 

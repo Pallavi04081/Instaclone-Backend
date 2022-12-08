@@ -8,7 +8,9 @@ env.config();
 const Registation = async (req, res) => {
     try {
         const validationOutput = validationResult(req)
+        console.log(validationOutput.isEmpty())
         const hashedPassowrd = await bcrypt.hash(req.body.password, 10)
+
         if (validationOutput.isEmpty()) {
             let Result = await RegistionDataNew.create({
                 name: req.body.name,
@@ -18,19 +20,22 @@ const Registation = async (req, res) => {
             })
             res.json({ Result })
         } else {
-            res.json({
+            res.status(400).json({
                 error: validationOutput.array()
             })
         }
     }
     catch (error) {
-        res.send(error)
+        res.status(400).json({
+            error
+        })
     }
 }
 
 const login = async (req, res) => {
     try {
         const userdata = await RegistionDataNew.find({ username: req.body.username })
+        console.log(userdata)
         if (userdata) {
             const PsswordOutput = await bcrypt.compare(req.body.password, userdata[0].password)
             if (PsswordOutput) {
@@ -52,6 +57,7 @@ const login = async (req, res) => {
 
 const patchUserData = async(req,res)=>{
     try{
+        console.log(req.body)
         const Result = await RegistionDataNew.findByIdAndUpdate({_id:req.params.id},{
           name:req.body.name,
           username:req.body.username,
@@ -71,7 +77,7 @@ const patchUserData = async(req,res)=>{
 
 const getUpdatedData = async(req,res)=>{
     try{
-        const Result = await RegistionDataNew.findOne({_id:req.params.id})
+        const Result = await RegistionDataNew.findOne({_id:req.params.id}).populate('following.users').populate('followers.users')
         res.json({
           Result
         }) 

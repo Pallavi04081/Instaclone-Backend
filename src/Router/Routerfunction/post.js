@@ -1,7 +1,8 @@
 const env = require('dotenv')
 const UserPostData = require('../../module/postData')
 const grid = require('gridfs-stream')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { Result } = require('express-validator');
 env.config();
 
 let gfs,gridfsBucket;
@@ -21,7 +22,7 @@ const uploadPhoto = async(req,res)=>{
            msg:"file not found"
          })
         }
-  const imageData = `${'https://insta-360-backend.herokuapp.com'}/post/${req.file.filename}`    
+  const imageData = `${'http://localhost:5000'}/post/${req.file.filename}`    
   res.status(200).json({
     imageData
   })
@@ -62,14 +63,13 @@ const uploadPost = async(req,res)=>{
 
 const getPosts = async(req,res)=>{
     try{
-      console.log(req.params.id)
-        let Result;
+      let Result;
         if(req.params.id){
             Result = await UserPostData.find({users:req.params.id})
-            console.log(Result)
             res.json({
               Result
             })
+
         }
         else{
           Result = await UserPostData.find()
@@ -97,4 +97,16 @@ const updatePostsLike = async(req,res)=>{
       }
 }
 
-module.exports={uploadPhoto,getUploadedPhoto,uploadPost,getPosts,updatePostsLike}
+const deletePost = async(req,res)=>{
+  try{
+    const data = await UserPostData.findOneAndDelete({_id:req.params.id})
+     res.json({
+      Result:data
+     })
+  }
+  catch(error){
+    console.log(error)
+  }
+}
+
+module.exports={uploadPhoto,getUploadedPhoto,uploadPost,getPosts,updatePostsLike,deletePost}

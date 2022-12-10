@@ -36,7 +36,6 @@ io.sockets.on('connection',async(socket)=>{
 
  }) 
 
-
 const port = process.env.PORT || 5000;
 server.listen(port,()=>{
     console.log('server is up')
